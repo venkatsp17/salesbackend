@@ -81,3 +81,62 @@ def getcustomers():
         return list1
     except:
         return "Data not returned"
+
+
+def getproducts():
+    try:
+        db = firestore.client()
+        products = db.collection("USERS").document("PRODUCTS").collection(
+            "ALL").stream()
+        list1 = []
+        for doc1 in products:
+            list1.append(doc1.to_dict())
+        return list1
+    except:
+        return "Data not returned"
+
+
+####################################################
+####################################################
+        #POST REQUESTS#
+####################################################
+####################################################
+
+
+def createorder(data):
+    try:
+        print(data['customerid'])
+        db = firestore.client()
+        ord_ref = db.collection("USERS").document("UID1").collection(
+            "ORDERS")
+        ord_ref.add(data)
+        return "Order Data Created"
+    except:
+        return "Error in creating Data"
+
+
+def createcollection(data):
+    try:
+        print(data)
+        db = firestore.client()
+        # cust_ref = db.collection("USERS").document("UID1").collection(
+        #     "CUSTOMERS").where("customerid", '==', data['customerid'])
+        # op = cust_ref.stream().to_dict()['openingbalance']
+        coll_ref = db.collection("USERS").document("UID1").collection(
+            "COLLECTIONS")
+        coll_ref.add(data)
+        return "Collection Data Created"
+    except:
+        return "Error in creating Data"
+
+
+def createcustomer(data):
+    try:
+        print(data)
+        db = firestore.client()
+        cust_ref = db.collection("USERS").document("UID1").collection(
+            "CUSTOMERS")
+        print(cust_ref.add(data))
+        return "Customer Data Created"
+    except:
+        return "Error in creating Data"
