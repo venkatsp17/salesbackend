@@ -1,5 +1,6 @@
 from mobile.views import orders, collections, custorder, custpay, getcust, createord, getproduct, createcoll, createcust
 from django.urls import path
+from web.views import orders1, collections1
 
 urlpatterns = [
     path('orders/', orders),
@@ -11,4 +12,8 @@ urlpatterns = [
     path('createorder/', createord),
     path('createcollection/', createcoll),
     path('createcustomer/', createcust),
+
+    #ADMIN
+    path('aorders/', orders1),
+    path('acollections/', collections1)
 ]

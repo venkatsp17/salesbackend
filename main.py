@@ -86,8 +86,7 @@ def getcustomers():
 def getproducts():
     try:
         db = firestore.client()
-        products = db.collection("USERS").document("PRODUCTS").collection(
-            "ALL").stream()
+        products = db.collection("PRODUCTS").stream()
         list1 = []
         for doc1 in products:
             list1.append(doc1.to_dict())
@@ -140,3 +139,44 @@ def createcustomer(data):
         return "Customer Data Created"
     except:
         return "Error in creating Data"
+
+
+####################################################
+####################################################
+        #ADMIN#
+####################################################
+####################################################
+
+
+def agetallorders():
+    try:
+        db = firestore.client()
+        count1 = len(list(db.collection("USERS").get()))
+        print("Count ", count1)
+        list1 = []
+        for i in range(1, count1+1):
+            orders = db.collection("USERS").document(
+                "UID"+str(i)).collection("ORDERS")
+            docs = orders.stream()
+            for doc in docs:
+                list1.append(doc.to_dict())
+        return list1
+    except:
+        return "Data not returned"
+    
+
+def agetallcollections():
+    try:
+        db = firestore.client()
+        count1 = len(list(db.collection("USERS").get()))
+        print("Count ", count1)
+        list1 = []
+        for i in range(1, count1+1):
+            collections = db.collection("USERS").document(
+                "UID"+str(i)).collection("COLLECTIONS")
+            docs = collections.stream()
+            for doc in docs:
+                list1.append(doc.to_dict())
+        return list1
+    except:
+        return "Data not returned"
